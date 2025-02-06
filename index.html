@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Concept Documentation</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9fafb;
+    }
+    .auth-page {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f9fafb;
+    }
+    .auth-form {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+    .auth-form h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #2c3e50;
+    }
+    .auth-form .form-group {
+      margin-bottom: 1rem;
+    }
+    .auth-form label {
+      font-weight: bold;
+      color: #6c757d;
+    }
+    .auth-form input, .auth-form button {
+      width: 100%;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+    .auth-form input {
+      border: 1px solid #ddd;
+    }
+    .auth-form button {
+      background: #2c3e50;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .auth-form button:hover {
+      background: #4c6ef5;
+    }
+    .auth-form .toggle-link {
+      display: block;
+      text-align: center;
+      margin-top: 1rem;
+      color: #2c3e50;
+      text-decoration: none;
+    }
+    .auth-form .toggle-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div id="auth-page" class="auth-page">
+    <div id="login-form" class="auth-form">
+      <h2>Login</h2>
+      <form onsubmit="event.preventDefault(); login()">
+        <div class="form-group">
+          <label for="login-email">Email</label>
+          <input type="email" id="login-email" required>
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" required>
+        </div>
+        <button type="submit">Login</button>
+      </form>
+      <a href="#" class="toggle-link" onclick="toggleAuthForm()">Don't have an account? Sign Up</a>
+    </div>
+    <div id="signup-form" class="auth-form" style="display: none;">
+      <h2>Sign Up</h2>
+      <form onsubmit="event.preventDefault(); signup()">
+        <div class="form-group">
+          <label for="signup-name">Name</label>
+          <input type="text" id="signup-name" required>
+        </div>
+        <div class="form-group">
+          <label for="signup-email">Email</label>
+          <input type="email" id="signup-email" required>
+        </div>
+        <div class="form-group">
+          <label for="signup-password">Password</label>
+          <input type="password" id="signup-password" required>
+        </div>
+        <button type="submit">Sign Up</button>
+      </form>
+      <a href="#" class="toggle-link" onclick="toggleAuthForm()">Already have an account? Login</a>
+    </div>
+  </div>
+
+  <script>
+    function toggleAuthForm() {
+      const loginForm = document.getElementById('login-form');
+      const signupForm = document.getElementById('signup-form');
+      loginForm.style.display = loginForm.style.display === 'none' ? 'block' : 'none';
+      signupForm.style.display = signupForm.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function login() {
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+
+      fetch('login.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          window.location.href = 'game-concept.php';
+        } else {
+          alert(data.message);
+        }
+      });
+    }
+
+    function signup() {
+        const name = document.getElementById('signup-name').value;
+        const email = document.getElementById('signup-email').value;
+        const password = document.getElementById('signup-password').value;
+    
+        console.log("Sending signup request:", { name, email, password }); // Debug
+    
+        fetch('signup.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Signup response:", data); // Debug
+            if (data.success) {
+                alert(data.message);
+                toggleAuthForm(); // Affiche le formulaire de login
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => console.error("Error:", error));
+    }    
+  </script>
+</body>
+</html>

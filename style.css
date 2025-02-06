@@ -1,0 +1,157 @@
+
+/* General Styles */
+body {
+  font-family: 'Poppins', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9fafb;
+  color: #333;
+}
+.header {
+  background: linear-gradient(135deg, #4c6ef5, #2c3e50);
+  color: white;
+  padding: 1rem 2rem;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.header h1 {
+  font-size: 2rem;
+  margin: 0;
+  font-weight: bold;
+}
+.header .actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+/* Progress Bar */
+.progress-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: #f9fafb;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.progress-bar span {
+  flex: 1;
+  text-align: center;
+  padding: 0.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: #eef2f7;
+  color: #6c757d;
+  font-weight: 500;
+}
+.progress-bar span.active,
+.progress-bar span:hover {
+  background: #2c3e50;
+  color: white;
+}
+
+/* Steps */
+.step {
+  display: none;
+  padding: 2rem;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+.step.active {
+  display: block;
+}
+.step h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #2c3e50;
+}
+
+/* Form Styling */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #6c757d;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+input, textarea, select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+input:focus, textarea:focus, select:focus {
+  border-color: #4c6ef5;
+  outline: none;
+}
+
+/* Buttons */
+button {
+  padding: 0.75rem 1.5rem;
+  background: #2c3e50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+button:hover {
+  background: #4c6ef5;
+}
+.actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.actions button.previous {
+  background: #aaa;
+  color: white;
+}
+.actions button.previous:hover {
+  background: #999;
+}
+.actions button.next {
+  background: #2c3e50;
+  color: white;
+}
+.actions button.save {
+  background: #28a745;
+}
+.actions button.save:hover {
+  background: #218838;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .progress-bar {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .progress-bar span {
+    flex: unset;
+    width: 100%;
+  }
+  .actions {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
