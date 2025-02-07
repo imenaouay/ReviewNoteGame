@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animated Background Form</title>
+  <style>
+
+  /* Animated Background */
+  .animated-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    animation: floatIcons 10s infinite alternate ease-in-out;
+  }
+  
+  .icon {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    opacity: 0.8;
+    filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.2));
+    transition: transform 0.5s ease, opacity 0.5s ease;
+  }
+  
+  .icon-1 {
+    top: 10%;
+    left: 20%;
+    animation: float1 10s infinite alternate ease-in-out;
+  }
+  
+  .icon-2 {
+    top: 30%;
+    right: 10%;
+    animation: float2 12s infinite alternate ease-in-out;
+  }
+  
+  .icon-3 {
+    bottom: 20%;
+    left: 50%;
+    animation: float3 15s infinite alternate ease-in-out;
+  }
+  
+  .icon-4 {
+    top: 60%;
+    right: 30%;
+    animation: float4 18s infinite alternate ease-in-out;
+  }
+  
+  .icon-5 {
+    bottom: 10%;
+    left: 70%;
+    animation: float5 20s infinite alternate ease-in-out;
+  }
+  
+  @keyframes floatIcons {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-20px);
+    }
+  }
+  
+  @keyframes float1 {
+    from {
+      transform: translate(0, 0);
+      opacity: 0.8;
+    }
+    to {
+      transform: translate(20px, -20px);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes float2 {
+    from {
+      transform: translate(0, 0);
+      opacity: 0.8;
+    }
+    to {
+      transform: translate(-20px, 20px);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes float3 {
+    from {
+      transform: translate(0, 0);
+      opacity: 0.8;
+    }
+    to {
+      transform: translate(30px, 30px);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes float4 {
+    from {
+      transform: translate(0, 0);
+      opacity: 0.8;
+    }
+    to {
+      transform: translate(-30px, -30px);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes float5 {
+    from {
+      transform: translate(0, 0);
+      opacity: 0.8;
+    }
+    to {
+      transform: translate(40px, 40px);
+      opacity: 1;
+    }
+  }
+  
+  </style>
+</head>
+<body>
+  <!-- Animated Background -->
+  <div class="animated-background">
+    <img src="https://cdn-icons-png.flaticon.com/512/5930/5930147.png" alt="Icon 1" class="icon icon-1">
+    <img src="https://cdn-icons-png.flaticon.com/512/10339/10339556.png" alt="Icon 2" class="icon icon-2">
+    <img src="https://cdn-icons-png.flaticon.com/512/5712/5712502.png" alt="Icon 3" class="icon icon-3">
+    <img src="https://cdn-icons-png.flaticon.com/512/10618/10618983.png" alt="Icon 4" class="icon icon-4">
+    <img src="https://cdn-icons-png.flaticon.com/512/5087/5087406.png" alt="Icon 5" class="icon icon-5">
+  </div>
+
+ 
+
+  <script>
+// Optional JavaScript for interactive effects
+document.addEventListener('DOMContentLoaded', () => {
+    const icons = document.querySelectorAll('.icon');
+  
+    // Add hover effects to icons
+    icons.forEach(icon => {
+      icon.addEventListener('mouseover', () => {
+        icon.style.transform = 'scale(1.2)';
+        icon.style.opacity = '1';
+      });
+  
+      icon.addEventListener('mouseout', () => {
+        icon.style.transform = 'scale(1)';
+        icon.style.opacity = '0.8';
+      });
+    });
+  });
+  </script>
+</body>
+</html>

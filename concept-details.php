@@ -38,7 +38,7 @@ try {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f9fafb;
+      /* background-color: #f9fafb; */
     }
     .header {
       background: linear-gradient(135deg, #4c6ef5, #2c3e50);
@@ -96,11 +96,13 @@ try {
   </style>
 </head>
 <body>
+  
   <!-- Header -->
   <div class="header">
     <h1>Concept Details</h1>
     <div class="actions">
-      <button onclick="window.location.href='home.php'">Back to Home</button>
+      <button onclick="window.location.href='home.php'">Back</button>
+      <button onclick="downloadConcept()">Download</button>
       <button onclick="logout()">Logout</button>
     </div>
   </div>
@@ -127,6 +129,30 @@ try {
   </div>
 
   <script>
+    // Download Concept Documentation
+    function downloadConcept() {
+      fetch('get-concepts.php')
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            const conceptsHtml = data.concepts.map(concept => `
+              <div class="concept-card">
+                <h3>${concept.title}</h3>
+                <p>${concept.game_overview}</p>
+              </div>
+            `).join('');
+            const blob = new Blob([conceptsHtml], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'game-concepts.html';
+            a.click();
+            URL.revokeObjectURL(url);
+          } else {
+            alert(data.message);
+          }
+        });
+    }
     // Logout Functionality
     function logout() {
       fetch('logout.php', {
@@ -141,5 +167,7 @@ try {
       });
     }
   </script>
+  <!-- Include the footer -->
+  <?php include 'footer.html'; ?>
 </body>
 </html>

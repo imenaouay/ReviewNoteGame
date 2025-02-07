@@ -3,24 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Game Concept Documentation</title>
+  <title>Game Reveiws</title>
+  
   <style>
     /* General Styles */
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f9fafb;
+      
     }
+    .background-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+      background-color:#a4c6e955;
+  }
+  
     .auth-page {
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      background-color: #f9fafb;
     }
     .auth-form {
-      background: white;
       padding: 2rem;
       border-radius: 10px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -71,6 +81,7 @@
   </style>
 </head>
 <body>
+  <div class="background-container"></div>
   <div id="auth-page" class="auth-page">
     <div id="login-form" class="auth-form">
       <h2>Login</h2>
@@ -128,7 +139,7 @@
       .then(response => response.json())
       .then(data => {
         if (data.success) {
-          window.location.href = 'game-concept.php';
+          window.location.href = 'home.php';
         } else {
           alert(data.message);
         }
@@ -160,5 +171,29 @@
         .catch(error => console.error("Error:", error));
     }    
   </script>
+   <!-- Footer will be loaded here -->
+   <div id="footer"></div>
+
+   <script>
+       fetch('footer.html')
+           .then(response => response.text())
+           .then(data => document.getElementById('footer').innerHTML = data);
+   </script>
+   
+   <script>
+    fetch('animBg.html')
+        .then(response => response.text())
+        .then(data => document.getElementById('background-container').innerHTML = data);
+
+        fetch('animBg.html')
+        .then(response => response.text())
+        .then(data => {
+            let bgContainer = document.createElement('div');
+            bgContainer.innerHTML = data;
+            bgContainer.classList.add('background-container');
+            document.body.prepend(bgContainer);
+        })
+        .catch(error => console.error('Erreur de chargement de l’animation:', error));
+</script>
 </body>
 </html>

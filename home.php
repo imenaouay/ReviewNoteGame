@@ -22,17 +22,28 @@ if (!isset($_SESSION['user_id'])) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home - Game Concept Documentation</title>
+  <title>Games Reviews</title>
+  <div class="background-container">
+    <?php include 'animBg.html'; ?>
+</div>
   <style>
     /* General Styles */
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f9fafb;
     }
+    .background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
     .header {
-      background: linear-gradient(135deg, #4c6ef5, #2c3e50);
+      background: linear-gradient(135deg,rgba(76, 110, 245, 0.41),#31404e);
       color: white;
       padding: 1rem 2rem;
       text-align: center;
@@ -70,7 +81,7 @@ if (!isset($_SESSION['user_id'])) {
       background: #4c6ef5;
     }
     .concept-card {
-      background: white;
+      background:rgba(32, 79, 174, 0.3);
       padding: 1.5rem;
       border-radius: 10px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -84,10 +95,14 @@ if (!isset($_SESSION['user_id'])) {
     .concept-card p {
       font-size: 1rem;
       color: #6c757d;
-      margin: 0 0 1rem 0;
+      margin: 0.5rem 0;
     }
-    .concept-card .view-details {
-      display: inline-block;
+    .concept-card .actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .concept-card button {
       padding: 0.75rem 1.5rem;
       background: #2c3e50;
       color: white;
@@ -97,8 +112,17 @@ if (!isset($_SESSION['user_id'])) {
       cursor: pointer;
       transition: all 0.3s ease;
     }
-    .concept-card .view-details:hover {
+    .concept-card button.view-details {
       background: #4c6ef5;
+    }
+    .concept-card button.edit {
+      background: #28a745;
+    }
+    .concept-card button.delete {
+      background: #dc3545;
+    }
+    .concept-card button:hover {
+      filter: brightness(0.9);
     }
     .no-concepts {
       text-align: center;
@@ -128,10 +152,11 @@ if (!isset($_SESSION['user_id'])) {
 <body>
   <!-- Header -->
   <div class="header">
-    <h1>Home - Game Concept Documentation</h1>
+    
+    <h1>Home - Games Reviews</h1>
     <div class="actions">
-      <button onclick="downloadConcepts()">Download Concepts</button>
-      <button onclick="printConcepts()">Print Concepts</button>
+      <button onclick="downloadConcepts()">Download</button>
+      <button onclick="printConcepts()">Print</button>
       <button onclick="logout()">Logout</button>
     </div>
   </div>
@@ -168,7 +193,11 @@ if (!isset($_SESSION['user_id'])) {
                   <h3>${concept.title}</h3>
                   <p><strong>Basic Information:</strong> ${concept.game_overview || 'N/A'}</p>
                   <p><strong>Saved At:</strong> ${new Date(concept.created_at).toLocaleString()}</p>
-                  <button class="view-details" onclick="viewDetails(${concept.id})">View Details</button>
+                  <div class="actions">
+                    <button class="view-details" onclick="viewDetails(${concept.id})">View Details</button>
+                    <button class="edit" onclick="editConcept(${concept.id})">Edit</button>
+                    <button class="delete" onclick="deleteConcept(${concept.id})">Delete</button>
+                  </div>
                 </div>
               `).join('');
             }
@@ -185,6 +214,33 @@ if (!isset($_SESSION['user_id'])) {
     // View Details of a Concept
     function viewDetails(conceptId) {
       window.location.href = `concept-details.php?id=${conceptId}`;
+    }
+
+    // Edit a Concept
+    function editConcept(conceptId) {
+      window.location.href = `game-concept.php?edit=${conceptId}`;
+    }
+
+    // Delete a Concept
+    function deleteConcept(conceptId) {
+      if (confirm('Are you sure you want to delete this concept?')) {
+        fetch(`delete-concept.php?id=${conceptId}`, {
+          method: 'POST'
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            alert(data.message);
+            loadConcepts(); // Reload the concepts list after deletion
+          } else {
+            alert(data.message);
+          }
+        })
+        .catch(error => {
+          console.error('Error deleting concept:', error);
+          alert('An error occurred while deleting the concept. Please try again.');
+        });
+      }
     }
 
     // Download Concepts
@@ -234,6 +290,21 @@ if (!isset($_SESSION['user_id'])) {
 
     // Load concepts when the page loads
     window.onload = loadConcepts;
-  </script>
+
+    fetch('animBg.html')
+        .then(response => response.text())
+        .then(data => {
+            let bgContainer = document.createElement('div');
+            bgContainer.innerHTML = data;
+            bgContainer.classList.add('background-container');
+            document.body.prepend(bgContainer);
+        })
+        .catch(error => console.error('Erreur de chargement de l’animation:', error));
+
+</script>
+
+  <!-- Include the footer -->
+  <?php include 'footer.html'; ?>
+  
 </body>
 </html>

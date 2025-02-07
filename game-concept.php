@@ -1,27 +1,26 @@
 <?php
-// Prevent session auto-closing
-session_set_cookie_params([
-    'lifetime' => 86400, // Session lifetime (e.g., 24 hours)
-    'path' => '/',
-    'domain' => '',
-    'secure' => false,
-    'httponly' => true,
-    'samesite' => 'Strict'
-]);
-// Start the session
 session_start();
-// Prevent session expiration while the user is active
-if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 86400)) {
-    session_unset();
-    session_destroy();
-    header("Location: index.html");
-    exit();
-}
-$_SESSION['LAST_ACTIVITY'] = time(); // Update last activity timestamp
-// Check if the user is logged in
+
+// Redirect if not logged in
 if (!isset($_SESSION['user_id'])) {
-    header('Location: index.html'); // Redirect to login page if not logged in
-    exit();
+    header('Location: index.html');
+    exit;
+}
+
+require 'config.php';
+
+$conceptId = isset($_GET['edit']) ? intval($_GET['edit']) : 0;
+$conceptData = [];
+
+if ($conceptId > 0) {
+    try {
+        $stmt = $pdo->prepare("SELECT * FROM game_concepts WHERE id = ? AND user_id = ?");
+        $stmt->execute([$conceptId, $_SESSION['user_id']]);
+        $conceptData = $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        echo "Error loading concept details.";
+        exit;
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -36,7 +35,7 @@ if (!isset($_SESSION['user_id'])) {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f9fafb;
+      /* background-color: #f9fafb; */
     }
     .header {
       background: linear-gradient(135deg, #4c6ef5, #2c3e50);
@@ -135,10 +134,10 @@ if (!isset($_SESSION['user_id'])) {
 <body>
   <!-- Header -->
   <div class="header">
-    <h1>Game Concept Documentation</h1>
+    <h1>Games Reviews - Notes</h1>
     <div class="actions">
-      <button onclick="downloadConcept()">Download Documentation</button>
-      <button onclick="printConcept()">Print Documentation</button>
+      <button onclick="downloadConcept()">Download</button>
+      <button onclick="printConcept()">Print</button>
       <button onclick="logout()">Logout</button>
       <button onclick="window.location.href='home.php'">Back</button>
     </div>
@@ -431,5 +430,7 @@ function saveConcept(title, gameOverview, gameplayMechanics, characters, weapons
     // Initialize the form
     window.onload = () => showStep(0); // Start with the first step
   </script>
+  <!-- Include the footer -->
+  <?php include 'footer.html'; ?>
 </body>
 </html>

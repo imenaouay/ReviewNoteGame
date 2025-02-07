@@ -1,157 +1,118 @@
 
-/* General Styles */
-body {
-  font-family: 'Poppins', Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f9fafb;
-  color: #333;
-}
-.header {
-  background: linear-gradient(135deg, #4c6ef5, #2c3e50);
-  color: white;
-  padding: 1rem 2rem;
-  text-align: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-.header h1 {
-  font-size: 2rem;
-  margin: 0;
-  font-weight: bold;
-}
-.header .actions {
+/* Animated Background */
+.animated-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
   display: flex;
   justify-content: center;
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-/* Container */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
-}
-
-/* Progress Bar */
-.progress-bar {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
-  padding: 1rem;
-  background: #f9fafb;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-.progress-bar span {
-  flex: 1;
-  text-align: center;
-  padding: 0.5rem;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  background: #eef2f7;
-  color: #6c757d;
-  font-weight: 500;
-}
-.progress-bar span.active,
-.progress-bar span:hover {
-  background: #2c3e50;
-  color: white;
+  flex-direction: column;
+  animation: floatIcons 10s infinite alternate ease-in-out;
 }
 
-/* Steps */
-.step {
-  display: none;
-  padding: 2rem;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin-bottom: 2rem;
-}
-.step.active {
-  display: block;
-}
-.step h2 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: #2c3e50;
+.icon {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  opacity: 0.8;
+  filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.2));
+  transition: transform 0.5s ease, opacity 0.5s ease;
 }
 
-/* Form Styling */
-.form-group {
-  margin-bottom: 1.5rem;
-}
-label {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #6c757d;
-  display: block;
-  margin-bottom: 0.5rem;
-}
-input, textarea, select {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
-}
-input:focus, textarea:focus, select:focus {
-  border-color: #4c6ef5;
-  outline: none;
+.icon-1 {
+  top: 10%;
+  left: 20%;
+  animation: float1 10s infinite alternate ease-in-out;
 }
 
-/* Buttons */
-button {
-  padding: 0.75rem 1.5rem;
-  background: #2c3e50;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-button:hover {
-  background: #4c6ef5;
-}
-.actions {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-}
-.actions button.previous {
-  background: #aaa;
-  color: white;
-}
-.actions button.previous:hover {
-  background: #999;
-}
-.actions button.next {
-  background: #2c3e50;
-  color: white;
-}
-.actions button.save {
-  background: #28a745;
-}
-.actions button.save:hover {
-  background: #218838;
+.icon-2 {
+  top: 30%;
+  right: 10%;
+  animation: float2 12s infinite alternate ease-in-out;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .progress-bar {
-    flex-direction: column;
-    gap: 0.5rem;
+.icon-3 {
+  bottom: 20%;
+  left: 50%;
+  animation: float3 15s infinite alternate ease-in-out;
+}
+
+.icon-4 {
+  top: 60%;
+  right: 30%;
+  animation: float4 18s infinite alternate ease-in-out;
+}
+
+.icon-5 {
+  bottom: 10%;
+  left: 70%;
+  animation: float5 20s infinite alternate ease-in-out;
+}
+
+@keyframes floatIcons {
+  0% {
+    transform: translateY(0);
   }
-  .progress-bar span {
-    flex: unset;
-    width: 100%;
+  100% {
+    transform: translateY(-20px);
   }
-  .actions {
-    flex-direction: column;
-    gap: 1rem;
+}
+
+@keyframes float1 {
+  from {
+    transform: translate(0, 0);
+    opacity: 0.8;
+  }
+  to {
+    transform: translate(20px, -20px);
+    opacity: 1;
+  }
+}
+
+@keyframes float2 {
+  from {
+    transform: translate(0, 0);
+    opacity: 0.8;
+  }
+  to {
+    transform: translate(-20px, 20px);
+    opacity: 1;
+  }
+}
+
+@keyframes float3 {
+  from {
+    transform: translate(0, 0);
+    opacity: 0.8;
+  }
+  to {
+    transform: translate(30px, 30px);
+    opacity: 1;
+  }
+}
+
+@keyframes float4 {
+  from {
+    transform: translate(0, 0);
+    opacity: 0.8;
+  }
+  to {
+    transform: translate(-30px, -30px);
+    opacity: 1;
+  }
+}
+
+@keyframes float5 {
+  from {
+    transform: translate(0, 0);
+    opacity: 0.8;
+  }
+  to {
+    transform: translate(40px, 40px);
+    opacity: 1;
   }
 }
